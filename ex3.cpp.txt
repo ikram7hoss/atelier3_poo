@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+struct element {
+    int valeur;
+    element *suivant;
+};
+
+class Liste {
+private:
+    element *premier;
+    
+public:
+    Liste() {
+        premier = NULL;
+    }
+    
+    void ajouter(int val) {
+        element *nouv = new element;
+        nouv->valeur = val;
+        nouv->suivant = premier;
+        premier = nouv;
+        cout << "Ajouté : " << val << endl;
+    }
+    
+    void supprimer() {
+        if (premier != NULL) {
+            element *temp = premier;
+            premier = premier->suivant;
+            cout << "Supprimé : " << temp->valeur << endl;
+            delete temp;
+        }
+        else {
+            cout << "Liste vide" << endl;
+        }
+    }
+    
+    void afficher() {
+        element *p = premier;
+        cout << "Liste : ";
+        while (p != NULL) {
+            cout << p->valeur << " -> ";
+            p = p->suivant;
+        }
+        cout << "NULL" << endl;
+    }
+    
+    ~Liste() {
+        element *p = premier;
+        while (p != NULL) {
+            element *temp = p;
+            p = p->suivant;
+            delete temp;
+        }
+        cout << "Liste détruite" << endl;
+    }
+};
+
+int main() {
+    Liste l;
+    
+    l.ajouter(10);
+    l.ajouter(20);
+    l.ajouter(30);
+    l.ajouter(40);
+    
+    l.afficher();
+    
+    l.supprimer();
+    l.supprimer();
+    
+    l.afficher();
+    
+    return 0;
+}
