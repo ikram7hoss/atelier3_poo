@@ -1,28 +1,24 @@
 #include <iostream>
 using namespace std;
 
-// Classe Client
 class Client {
 public:
     int id;
     string nom;
     string prenom;
     
-    // Constructeur vide
     Client() {
         id = 0;
         nom = "";
         prenom = "";
     }
     
-    // Constructeur avec paramètres
     Client(int i, string n, string p) {
         id = i;
         nom = n;
         prenom = p;
     }
     
-    // Constructeur de copie
     Client(Client &c) {
         id = c.id;
         nom = c.nom;
@@ -34,7 +30,6 @@ public:
     }
 };
 
-// Classe Compte
 class Compte {
 public:
     int numero;
@@ -42,7 +37,6 @@ public:
     Client *client;
     static int nbComptes;
     
-    // Constructeur sans paramètre
     Compte() {
         numero = 0;
         solde = 0;
@@ -50,26 +44,22 @@ public:
         nbComptes++;
     }
     
-    // Constructeur avec paramètres
     Compte(int n, float s, Client *c) {
         numero = n;
         solde = s;
-        client = c;  // oubli : devrait faire une copie profonde
+        client = c;
         nbComptes++;
     }
     
-    // Constructeur de copie
     Compte(Compte &c) {
         numero = c.numero;
         solde = c.solde;
-        client = c.client;  // copie superficielle (erreur classique)
+        client = c.client;
         nbComptes++;
     }
     
-    // Destructeur
     ~Compte() {
         nbComptes--;
-        // oubli du delete client (fuite mémoire possible)
     }
     
     void afficher() {
@@ -84,10 +74,8 @@ public:
     }
 };
 
-// Initialisation variable statique
 int Compte::nbComptes = 0;
 
-// Fonction pour calculer intérêt
 float calculInteret(float solde, float taux) {
     return solde * (1 + taux/100);
 }
@@ -99,25 +87,23 @@ int main() {
     Compte cpt1(101, 5000, &c1);
     Compte cpt2(102, 3000, &c2);
     
-    cout << "=== Affichage des comptes ===" << endl;
     cpt1.afficher();
     cpt2.afficher();
     
     Compte::afficherNbComptes();
     
-    cout << "\n=== Copie de compte ===" << endl;
     Compte cpt3(cpt1);
     cpt3.afficher();
     
     Compte::afficherNbComptes();
     
-    cout << "\n=== Calcul intérêts ===" << endl;
     float nouveauSolde = calculInteret(cpt1.solde, 5);
     cpt1.solde = nouveauSolde;
-    cout << "Après intérêts 5% : " << endl;
     cpt1.afficher();
     
     Compte::afficherNbComptes();
     
     return 0;
 }
+    
+   
